@@ -2,7 +2,6 @@ import React from "react";
 import * as ReactBootStrap from "react-bootstrap";
 
 const Table2 = ({ arrays }) => {
-  console.log(arrays[0].quantity);
   return (
     <div>
       <ReactBootStrap.Table striped bordered hover>
@@ -13,11 +12,15 @@ const Table2 = ({ arrays }) => {
         </thead>
         <tbody>
           {arrays.map((obj) => {
-            return (
-              <tr key={obj.id}>
-                <td></td>
-              </tr>
-            );
+            if (obj.quantity > 0 && obj.show) {
+              return (
+                <tr key={obj.id}>
+                  <td>
+                    {obj.quantity} kg {obj.name}({obj.rating})
+                  </td>
+                </tr>
+              );
+            }
           })}
         </tbody>
       </ReactBootStrap.Table>

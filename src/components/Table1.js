@@ -1,13 +1,20 @@
 import React from "react";
 import * as ReactBootStrap from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 import reactDom from "react-dom";
 import QuantityCounter from "./QuantityCounter";
 import RatingCounter from "./RatingCounter";
 import Table2 from "./Table2";
-const Table1 = ({ arrays, setArrays }) => {
+const Table1 = ({
+  arrays,
+  incrementQuantity,
+  decrementQuantity,
+  incrementRating,
+  decrementRating,
+  lineStrike,
+}) => {
   return (
     <div>
-      <h2>Table 1 Componenet</h2>
       <ReactBootStrap.Table striped bordered hover>
         <thead>
           <tr>
@@ -19,30 +26,48 @@ const Table1 = ({ arrays, setArrays }) => {
           </tr>
         </thead>
         <tbody>
-          {arrays.map((obj) => {
+          {arrays.map((obj, index) => {
             return (
               <React.Fragment>
-                <tr key={obj.id}>
+                <tr className={obj.show ? null : "selected"} key={obj.id}>
                   <td>{obj.id}</td>
                   <td>{obj.name}</td>
                   <td>
-                    <QuantityCounter arrays={arrays} setArrays={setArrays} />
+                    <button onClick={() => incrementQuantity(index)}>+</button>
+                    {obj.quantity}
+                    <button
+                      onClick={
+                        obj.quantity > 0 ? () => decrementQuantity(index) : null
+                      }
+                    >
+                      -
+                    </button>
                   </td>
                   <td>
-                    <RatingCounter arrays={arrays} setArrays={setArrays} />
+                    <button onClick={() => incrementRating(index)}>+</button>
+                    {obj.rating}
+                    <button
+                      onClick={
+                        obj.rating > 0 ? () => decrementRating(index) : null
+                      }
+                    >
+                      -
+                    </button>
                   </td>
                   <td>
-                    <button>{obj.button}</button>
+                    <Button
+                      variant={obj.button ? "danger" : "primary"}
+                      style={{ width: "75px", padding: "3px" }}
+                      onClick={() => lineStrike(index)}
+                    >
+                      {obj.button ? "Dismiss" : "Admit"}
+                    </Button>
                   </td>
-                </tr>
-                <tr key={obj.id}>
-                  <td>{obj.quantity}</td>
                 </tr>
               </React.Fragment>
             );
           })}
         </tbody>
-        <Table2 arrays={arrays} setArrays={setArrays} />
       </ReactBootStrap.Table>
     </div>
   );
