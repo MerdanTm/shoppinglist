@@ -12,14 +12,16 @@ const FormInput = ({ arrays, setArrays }) => {
   const formSubmit = (e) => {
     e.preventDefault();
     const newArray = arrays;
-    newArray.push({
-      id: arrays.length + 1,
-      name: input,
-      quantity: 0,
-      rating: 0,
-      button: true,
-      show: true,
-    });
+    if (input) {
+      newArray.push({
+        id: arrays.length + 1,
+        name: input,
+        quantity: 0,
+        rating: 0,
+        button: true,
+        show: true,
+      });
+    }
     setArrays([...newArray]);
     setInput("");
   };
